@@ -4,12 +4,12 @@
 /node_modules
 /.pnp
 .pnp.js
-.yarn/install-state.gz
 
 # testing
 /coverage
 
 # next.js
+next.config.js
 /.next/
 /out/
 
@@ -27,6 +27,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env
 
 # vercel
 .vercel
@@ -34,3 +35,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+next.config.js
+
+# Ignorar archivos de pruebas
+__tests__/
+*.test.ts
+*.spec.js
+jest.config.js
+jest.config.ts
+context.ts
+```
