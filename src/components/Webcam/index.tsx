@@ -66,6 +66,7 @@ const WebcamComponent: FC = () => {
                         <div
                             style={{
                                 display: 'flex',
+                                marginTop: '2rem',
                                 height: '100%',
                                 justifyContent: 'center',
                                 alignItems: 'center',
