@@ -60,7 +60,6 @@ const WebcamComponent: FC = () => {
                                 right: 0,
                                 left: 0,
                                 width: '100vw',
-                                height: '100%',
                             }}
                             videoConstraints={{
                                 ...videoConstraints,
@@ -69,7 +68,7 @@ const WebcamComponent: FC = () => {
                         />
                         <ButtonComponent
                             variant="contained"
-                            sx={{ position: 'absolute', bottom: 0, left: 0 }}
+                            sx={{ position: 'absolute', bottom: 30, left: 0 }}
                             onClick={handleClick}
                             title="Switch camera"
                             icon={<CameraswitchIcon />}
@@ -80,14 +79,14 @@ const WebcamComponent: FC = () => {
                     {imgSrc ? (
                         <ButtonComponent
                             variant="contained"
-                            sx={{ position: 'absolute', bottom: 0, right: 0 }}
+                            sx={{ position: 'absolute', bottom: 30, right: 0 }}
                             onClick={retake}
                             title="Retake photo"
                         />
                     ) : (
                         <ButtonComponent
                             variant="contained"
-                            sx={{ position: 'absolute', bottom: 0, right: 0 }}
+                            sx={{ position: 'absolute', bottom: 30, right: 0 }}
                             onClick={capture}
                             title="Capture photo"
                         />
