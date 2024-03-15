@@ -66,6 +66,7 @@ const WebcamComponent: FC = () => {
                         <div
                             style={{
                                 display: 'flex',
+                                marginTop: '1rem',
                             }}
                         >
                             <ButtonComponent
