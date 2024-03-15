@@ -47,7 +47,7 @@ const WebcamComponent: FC = () => {
                             download={true}
                             // height={720}
                             // width={480}
-                            style={{ width: '100vw', height: '100vh' }}
+                            style={{ width: '100vw', height: '100%' }}
                             videoConstraints={{
                                 ...videoConstraints,
                                 facingMode,
