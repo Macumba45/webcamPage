@@ -38,7 +38,6 @@ const WebcamComponent: FC = () => {
                 style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    height: '100vh',
                     backgroundColor: 'black',
                 }}
             >
