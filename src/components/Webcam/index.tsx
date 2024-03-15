@@ -10,7 +10,8 @@ const WebcamComponent: FC = () => {
 
     const videoConstraints = {
         facingMode: FACING_MODE_USER,
-        aspectRatio: 0.81,
+        width: { min: 480 },
+        height: { min: 720 },
     }
     const webcamRef = useRef<Webcam>(null) // specify the type here
     const [facingMode, setFacingMode] = React.useState(FACING_MODE_USER)
@@ -44,7 +45,7 @@ const WebcamComponent: FC = () => {
                             ref={webcamRef}
                             screenshotFormat="image/jpeg"
                             download={true}
-                            // style={{ width: '100vw', height: '100%' }}
+                            style={{ width: '100vw', height: '100%' }}
                             videoConstraints={{
                                 ...videoConstraints,
                                 facingMode,
