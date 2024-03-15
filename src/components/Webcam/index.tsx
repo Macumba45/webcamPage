@@ -1,5 +1,5 @@
 'use client'
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
+import React, { FC, useCallback, useRef, useState } from 'react'
 import Webcam from 'react-webcam'
 import ButtonComponent from '../Button'
 import CameraswitchIcon from '@mui/icons-material/Cameraswitch'
@@ -8,20 +8,15 @@ const WebcamComponent: FC = () => {
     const FACING_MODE_USER = 'user'
     const FACING_MODE_ENVIRONMENT = 'environment'
 
-    const webcamRef = useRef<Webcam>(null) // specify the type here
-    const [facingMode, setFacingMode] = React.useState(FACING_MODE_USER)
-    const [imgSrc, setImgSrc] = useState<string | null>(null) // specify the type here
-    const [aspectRatio, setAspectRatio] = useState(9 / 16) // default aspect ratio
-
     const videoConstraints = {
         facingMode: FACING_MODE_USER,
         // width: { min: 480 },
         // height: { min: 720 },
-        aspectRatio: aspectRatio,
+        aspectRatio: 4 / 3,
     }
-    useEffect(() => {
-        setAspectRatio(window.innerWidth / window.innerHeight)
-    }, [])
+    const webcamRef = useRef<Webcam>(null) // specify the type here
+    const [facingMode, setFacingMode] = React.useState(FACING_MODE_USER)
+    const [imgSrc, setImgSrc] = useState<string | null>(null) // specify the type here
 
     const retake = () => {
         setImgSrc(null)
@@ -42,9 +37,8 @@ const WebcamComponent: FC = () => {
         <>
             <div
                 style={{
-                    display: 'flex',
-                    flexDirection: 'column',
                     backgroundColor: 'black',
+                    height: '100vh',
                 }}
             >
                 {imgSrc ? (
@@ -59,7 +53,15 @@ const WebcamComponent: FC = () => {
                             download={true}
                             // height={720}
                             // width={480}
-                            style={{ width: '100vw', height: '100%' }}
+                            style={{
+                                position: 'absolute',
+                                top: 0,
+                                bottom: 0,
+                                right: 0,
+                                left: 0,
+                                width: '100vw',
+                                height: '100%',
+                            }}
                             videoConstraints={{
                                 ...videoConstraints,
                                 facingMode,
