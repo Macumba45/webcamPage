@@ -8,14 +8,13 @@ const nextConfig = {
         '@mui/icons-material', // If @mui/icons-material is being used
         '@mui/x-data-grid',
     ],
-    webpack: (config) => {
+    webpack: config => {
         config.resolve.alias = {
             ...config.resolve.alias,
             '@mui/styled-engine': '@mui/styled-engine-sc',
-        };
-        return config;
-    }
+        }
+        return config
+    },
 }
 
-
-export default nextConfig;
+export default nextConfig
