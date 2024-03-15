@@ -1,8 +1,8 @@
 'use client'
-import { Button } from '@mui/material'
 import React, { FC, useCallback, useRef, useState } from 'react'
 import Webcam from 'react-webcam'
 import ButtonComponent from '../Button'
+import CameraswitchIcon from '@mui/icons-material/Cameraswitch'
 
 const WebcamComponent: FC = () => {
     const FACING_MODE_USER = 'user'
@@ -52,9 +52,10 @@ const WebcamComponent: FC = () => {
                         />
                         <ButtonComponent
                             variant="contained"
-                            sx={{ position: 'absolute', bottom: 0, left: 100 }}
+                            sx={{ position: 'absolute', bottom: 0, left: 0 }}
                             onClick={handleClick}
                             title="Switch camera"
+                            icon={<CameraswitchIcon />}
                         />
                     </>
                 )}
@@ -69,7 +70,7 @@ const WebcamComponent: FC = () => {
                     ) : (
                         <ButtonComponent
                             variant="contained"
-                            sx={{ position: 'absolute', bottom: 0, right: 100 }}
+                            sx={{ position: 'absolute', bottom: 0, right: 0 }}
                             onClick={capture}
                             title="Capture photo"
                         />

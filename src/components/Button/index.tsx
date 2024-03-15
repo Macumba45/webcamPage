@@ -10,6 +10,7 @@ interface ButtonProps {
     variant?: 'text' | 'outlined' | 'contained'
     sx?: object
     children?: ReactNode
+    icon?: ReactNode
 }
 
 const ButtonComponent: FC<ButtonProps> = ({
@@ -19,20 +20,16 @@ const ButtonComponent: FC<ButtonProps> = ({
     variant,
     sx,
     children,
+    icon,
 }) => {
     return (
-        <Stack
-            height={40}
-            direction="row"
-            spacing={2}
-            marginLeft={3}
-            marginRight={3}
-        >
+        <Stack direction="row" spacing={2} marginLeft={3} marginRight={3}>
             <Button
                 disabled={disabled}
                 onClick={onClick}
                 variant={variant}
                 sx={sx}
+                startIcon={icon}
             >
                 {children || title}
             </Button>
