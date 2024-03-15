@@ -1,6 +1,8 @@
 'use client'
+import { Button } from '@mui/material'
 import React, { FC, useCallback, useRef, useState } from 'react'
 import Webcam from 'react-webcam'
+import ButtonComponent from '../Button'
 
 const WebcamComponent: FC = () => {
     const FACING_MODE_USER = 'user'
@@ -8,6 +10,7 @@ const WebcamComponent: FC = () => {
 
     const videoConstraints = {
         facingMode: FACING_MODE_USER,
+        aspectRatio: 0.81,
     }
     const webcamRef = useRef<Webcam>(null) // specify the type here
     const [facingMode, setFacingMode] = React.useState(FACING_MODE_USER)
@@ -41,20 +44,35 @@ const WebcamComponent: FC = () => {
                             ref={webcamRef}
                             screenshotFormat="image/jpeg"
                             download={true}
-                            style={{ width: '100vw', height: '100vh' }}
+                            // style={{ width: '100vw', height: '100%' }}
                             videoConstraints={{
                                 ...videoConstraints,
                                 facingMode,
                             }}
                         />
-                        <button onClick={handleClick}>Switch camera</button>
+                        <ButtonComponent
+                            variant="contained"
+                            sx={{ position: 'absolute', bottom: 0, left: 100 }}
+                            onClick={handleClick}
+                            title="Switch camera"
+                        />
                     </>
                 )}
                 <div>
                     {imgSrc ? (
-                        <button onClick={retake}>Retake photo</button>
+                        <ButtonComponent
+                            variant="contained"
+                            sx={{ position: 'absolute', bottom: 0, right: 0 }}
+                            onClick={retake}
+                            title="Retake photo"
+                        />
                     ) : (
-                        <button onClick={capture}>Capture photo</button>
+                        <ButtonComponent
+                            variant="contained"
+                            sx={{ position: 'absolute', bottom: 0, right: 100 }}
+                            onClick={capture}
+                            title="Capture photo"
+                        />
                     )}
                 </div>
             </div>
