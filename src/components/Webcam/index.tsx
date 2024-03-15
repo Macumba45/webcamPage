@@ -18,7 +18,7 @@ const WebcamComponent: FC = () => {
 
     return (
         <>
-            <div className="container">
+            <div>
                 {imgSrc ? (
                     <img src={imgSrc} alt="webcam" />
                 ) : (
@@ -28,10 +28,9 @@ const WebcamComponent: FC = () => {
                         ref={webcamRef}
                         screenshotFormat="image/jpeg"
                         download={true}
-                        style={{ width: '100vw', height: '100vh' }}
                     />
                 )}
-                <div className="btn-container">
+                <div>
                     {imgSrc ? (
                         <button onClick={retake}>Retake photo</button>
                     ) : (
