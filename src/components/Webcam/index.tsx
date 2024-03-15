@@ -28,6 +28,7 @@ const WebcamComponent: FC = () => {
                         ref={webcamRef}
                         screenshotFormat="image/jpeg"
                         download={true}
+                        style={{ width: '100vw' }}
                     />
                 )}
                 <div>
