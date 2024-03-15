@@ -39,6 +39,7 @@ const WebcamComponent: FC = () => {
                 style={{
                     backgroundColor: 'black',
                     background: 'black',
+                    height: '100vh',
                 }}
             >
                 {imgSrc ? (
@@ -66,7 +67,9 @@ const WebcamComponent: FC = () => {
                         <div
                             style={{
                                 display: 'flex',
-                                marginTop: '1rem',
+                                height: '100%',
+                                justifyContent: 'center',
+                                alignItems: 'center',
                             }}
                         >
                             <ButtonComponent
