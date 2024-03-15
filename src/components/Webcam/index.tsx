@@ -44,54 +44,56 @@ const WebcamComponent: FC = () => {
                 {imgSrc ? (
                     <img src={imgSrc} alt="webcam" />
                 ) : (
-                    <>
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            height: '100%',
+                        }}
+                    >
                         <Webcam
                             audio={false}
                             screenshotQuality={1}
                             ref={webcamRef}
                             screenshotFormat="image/jpeg"
                             download={true}
-                            // height={720}
-                            // width={480}
-                            style={{
-                                position: 'absolute',
-                                top: 0,
-                                bottom: 0,
-                                right: 0,
-                                left: 0,
-                                width: '100vw',
-                            }}
                             videoConstraints={{
                                 ...videoConstraints,
                                 facingMode,
                             }}
                         />
-                        <ButtonComponent
-                            variant="contained"
-                            sx={{ position: 'absolute', bottom: 30, left: 10 }}
-                            onClick={handleClick}
-                            title="Switch camera"
-                            icon={<CameraswitchIcon />}
-                        />
-                    </>
+
+                        <div
+                            style={{
+                                display: 'flex',
+                            }}
+                        >
+                            <ButtonComponent
+                                variant="contained"
+                                onClick={handleClick}
+                                title="Switch camera"
+                                sx={{
+                                    backgroundColor: 'white',
+                                    color: 'black',
+                                }}
+                                icon={<CameraswitchIcon />}
+                            />
+                            {imgSrc ? (
+                                <ButtonComponent
+                                    variant="contained"
+                                    onClick={retake}
+                                    title="Retake photo"
+                                />
+                            ) : (
+                                <ButtonComponent
+                                    variant="contained"
+                                    onClick={capture}
+                                    title="Capture photo"
+                                />
+                            )}
+                        </div>
+                    </div>
                 )}
-                <div>
-                    {imgSrc ? (
-                        <ButtonComponent
-                            variant="contained"
-                            sx={{ position: 'absolute', bottom: 30, right: 10 }}
-                            onClick={retake}
-                            title="Retake photo"
-                        />
-                    ) : (
-                        <ButtonComponent
-                            variant="contained"
-                            sx={{ position: 'absolute', bottom: 30, right: 10 }}
-                            onClick={capture}
-                            title="Capture photo"
-                        />
-                    )}
-                </div>
             </div>
         </>
     )
