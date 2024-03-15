@@ -34,7 +34,14 @@ const WebcamComponent: FC = () => {
 
     return (
         <>
-            <div>
+            <div
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '100vh',
+                    backgroundColor: 'black',
+                }}
+            >
                 {imgSrc ? (
                     <img src={imgSrc} alt="webcam" />
                 ) : (
