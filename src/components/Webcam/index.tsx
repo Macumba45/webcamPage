@@ -39,7 +39,6 @@ const WebcamComponent: FC = () => {
                 style={{
                     backgroundColor: 'black',
                     background: 'black',
-                    height: '100vh',
                 }}
             >
                 {imgSrc ? (
