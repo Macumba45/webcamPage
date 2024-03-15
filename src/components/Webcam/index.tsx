@@ -41,7 +41,7 @@ const WebcamComponent: FC = () => {
                             ref={webcamRef}
                             screenshotFormat="image/jpeg"
                             download={true}
-                            style={{ width: '100vw' }}
+                            style={{ width: '100vw', height: '100vh' }}
                             videoConstraints={{
                                 ...videoConstraints,
                                 facingMode,
