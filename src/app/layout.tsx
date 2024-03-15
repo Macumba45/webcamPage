@@ -27,7 +27,11 @@ export default function RootLayout({
         <>
             <head></head>
             <html lang="en" className={roboto.className}>
-                <body>
+                <body
+                    style={{
+                        backgroundColor: '#000000',
+                    }}
+                >
                     <AppRouterCacheProvider>
                         <StyledComponentsRegistry>
                             <ThemeProvider theme={theme}>

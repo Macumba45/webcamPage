@@ -38,7 +38,7 @@ const WebcamComponent: FC = () => {
             <div
                 style={{
                     backgroundColor: 'black',
-                    height: '100vh',
+                    background: 'black',
                 }}
             >
                 {imgSrc ? (
@@ -68,7 +68,7 @@ const WebcamComponent: FC = () => {
                         />
                         <ButtonComponent
                             variant="contained"
-                            sx={{ position: 'absolute', bottom: 30, left: 0 }}
+                            sx={{ position: 'absolute', bottom: 30, left: 10 }}
                             onClick={handleClick}
                             title="Switch camera"
                             icon={<CameraswitchIcon />}
@@ -79,14 +79,14 @@ const WebcamComponent: FC = () => {
                     {imgSrc ? (
                         <ButtonComponent
                             variant="contained"
-                            sx={{ position: 'absolute', bottom: 30, right: 0 }}
+                            sx={{ position: 'absolute', bottom: 30, right: 10 }}
                             onClick={retake}
                             title="Retake photo"
                         />
                     ) : (
                         <ButtonComponent
                             variant="contained"
-                            sx={{ position: 'absolute', bottom: 30, right: 0 }}
+                            sx={{ position: 'absolute', bottom: 30, right: 10 }}
                             onClick={capture}
                             title="Capture photo"
                         />
