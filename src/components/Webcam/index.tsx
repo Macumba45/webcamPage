@@ -7,9 +7,9 @@ import CameraswitchIcon from '@mui/icons-material/Cameraswitch'
 import CameraIcon from '@mui/icons-material/Camera'
 import SwitchCameraIcon from '@mui/icons-material/SwitchCamera'
 import Draggable from 'react-draggable'
-import { Resizable } from 'react-resizable'
 import { IconButton, Typography } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
+import { ContainerPicture, MainContainer, PicuresScreenShot } from './styles'
 
 const WebcamComponent: FC = () => {
     const FACING_MODE_USER = 'user'
@@ -78,173 +78,157 @@ const WebcamComponent: FC = () => {
     }, [])
 
     return (
-        <>
-            <div
-                style={{
-                    backgroundColor: 'black',
-                    background: 'black',
-                }}
-            >
-                <div
-                    style={{
-                        position: 'absolute',
-                        zIndex: 9999,
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        margin: '5px',
-                    }}
-                >
-                    {imgSrcs.map((imgSrc, index) => (
-                        <div
-                            key={index}
-                            style={{
-                                position: 'relative',
-                                display: 'inline-block',
-                                margin: '10px',
-                            }}
+        <MainContainer>
+            <ContainerPicture>
+                {imgSrcs.map((imgSrc, index) => (
+                    <div
+                        key={index}
+                        style={{
+                            position: 'relative',
+                            display: 'inline-block',
+                            margin: '10px',
+                        }}
+                    >
+                        <a
+                            href={imgSrc}
+                            target="_blank"
+                            rel="noopener noreferrer"
                         >
-                            <img
-                                style={{
-                                    display: 'flex',
-                                    flexWrap: 'wrap',
-                                    justifyContent: 'center',
-                                    width: '110px',
-                                    height: '110px',
-                                    border: '2px solid white',
-                                    borderRadius: '0.5rem',
-                                    margin: '5px',
-                                }}
+                            <PicuresScreenShot
                                 key={index}
                                 src={imgSrc}
                                 alt={`webcam ${index}`}
                             />
-                            <IconButton
-                                aria-label="delete"
-                                size="small"
-                                style={{
-                                    position: 'absolute',
-                                    top: 0,
-                                    right: 0,
-                                    zIndex: 10000,
+                        </a>
+                        <IconButton
+                            aria-label="delete"
+                            size="small"
+                            style={{
+                                position: 'absolute',
+                                top: 0,
+                                right: 0,
+                                zIndex: 10000,
+                            }}
+                            onClick={() => {
+                                const newImgSrcs = [...imgSrcs]
+                                newImgSrcs.splice(index, 1)
+                                setImgSrcs(newImgSrcs)
+                            }}
+                        >
+                            <DeleteIcon
+                                sx={{
+                                    color: 'white',
+                                    fontSize: '1rem',
+                                    padding: '0rem',
+                                    border: 'none',
+                                    mt: 6,
                                 }}
-                                onClick={() => {
-                                    const newImgSrcs = [...imgSrcs]
-                                    newImgSrcs.splice(index, 1)
-                                    setImgSrcs(newImgSrcs)
-                                }}
-                            >
-                                <DeleteIcon
-                                    sx={{
-                                        color: 'white',
-                                        fontSize: '1rem',
-                                        padding: '0rem',
-                                        border: 'none',
-                                        mt: 8,
-                                    }}
-                                    fontSize="small"
-                                />
-                            </IconButton>
-                        </div>
-                    ))}
-                </div>
+                                fontSize="small"
+                            />
+                        </IconButton>
+                        <a href={imgSrc} download={`webcam_image_${index}.png`}>
+                            <button>Guardar imagen</button>
+                        </a>
+                    </div>
+                ))}
+            </ContainerPicture>
+            <div
+                style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '100%',
+                }}
+            >
+                <Webcam
+                    audio={false}
+                    screenshotQuality={1}
+                    imageSmoothing={true}
+                    mirrored={mirror}
+                    ref={webcamRef}
+                    screenshotFormat="image/jpeg"
+                    download={true}
+                    videoConstraints={{
+                        ...videoConstraints,
+                        facingMode,
+                    }}
+                    style={{
+                        borderBottomLeftRadius: '0.5rem',
+                        borderBottomRightRadius: '0.5rem',
+                    }}
+                />
+                <Draggable scale={1}>
+                    <div
+                        style={{
+                            position: 'absolute',
+                            top: '10px',
+                            right: '10px',
+                            color: 'white',
+                            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                            padding: '2px 5px',
+                            borderRadius: '5px',
+                        }}
+                    >
+                        <Typography fontSize={24} fontWeight={700}>
+                            {date.toLocaleString()}
+                        </Typography>
+                        <Typography fontSize={24} fontWeight={700}>
+                            {city}
+                        </Typography>
+                    </div>
+                </Draggable>
                 <div
                     style={{
                         display: 'flex',
-                        flexDirection: 'column',
-                        height: '100%',
+                        marginTop: '2rem',
+                        height: '100px',
+                        justifyContent: 'center',
+                        alignItems: 'center',
                     }}
                 >
-                    <Webcam
-                        audio={false}
-                        screenshotQuality={1}
-                        imageSmoothing={true}
-                        mirrored={mirror}
-                        ref={webcamRef}
-                        screenshotFormat="image/jpeg"
-                        download={true}
-                        videoConstraints={{
-                            ...videoConstraints,
-                            facingMode,
+                    <ButtonComponent
+                        variant="contained"
+                        onClick={handleClick}
+                        title=""
+                        sx={{
+                            backgroundColor: 'transparent',
+                            color: 'black',
                         }}
-                        style={{
-                            borderBottomLeftRadius: '0.5rem',
-                            borderBottomRightRadius: '0.5rem',
-                        }}
+                        icon={
+                            <CameraswitchIcon
+                                sx={{
+                                    backgroundColor: 'black',
+                                }}
+                            />
+                        }
                     />
-                    <Draggable scale={1}>
-                        <div
-                            style={{
-                                position: 'absolute',
-                                top: '10px',
-                                right: '10px',
-                                color: 'white',
-                                backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                                padding: '2px 5px',
-                                borderRadius: '5px',
-                            }}
-                        >
-                            <Typography fontSize={24} fontWeight={700}>
-                                {date.toLocaleString()}
-                            </Typography>
-                            <Typography fontSize={24} fontWeight={700}>
-                                {city}
-                            </Typography>
-                        </div>
-                    </Draggable>
-                    <div
-                        style={{
-                            display: 'flex',
-                            marginTop: '2rem',
-                            height: '100px',
-                            justifyContent: 'center',
-                            alignItems: 'center',
+                    <ButtonComponent
+                        variant="contained"
+                        onClick={capture}
+                        sx={{
+                            backgroundColor: 'transparent',
+                            color: 'black',
                         }}
-                    >
-                        <ButtonComponent
-                            variant="contained"
-                            onClick={handleClick}
-                            title=""
-                            sx={{
-                                backgroundColor: 'transparent',
-                                color: 'black',
-                            }}
-                            icon={
-                                <CameraswitchIcon
-                                    sx={{
-                                        backgroundColor: 'black',
-                                    }}
-                                />
-                            }
-                        />
-                        <ButtonComponent
-                            variant="contained"
-                            onClick={capture}
-                            sx={{
-                                backgroundColor: 'transparent',
-                                color: 'black',
-                            }}
-                            icon={
-                                <CameraIcon
-                                    sx={{
-                                        backgroundColor: 'white',
-                                        color: 'black',
-                                    }}
-                                />
-                            }
-                        />
-                        <ButtonComponent
-                            variant="contained"
-                            onClick={mirrorImage}
-                            sx={{
-                                backgroundColor: 'transparent',
-                                color: 'black',
-                            }}
-                            icon={<SwitchCameraIcon />}
-                        />
-                    </div>
+                        icon={
+                            <CameraIcon
+                                sx={{
+                                    backgroundColor: 'white',
+                                    color: 'black',
+                                }}
+                            />
+                        }
+                    />
+                    <ButtonComponent
+                        variant="contained"
+                        onClick={mirrorImage}
+                        sx={{
+                            backgroundColor: 'transparent',
+                            color: 'black',
+                        }}
+                        icon={<SwitchCameraIcon />}
+                    />
                 </div>
             </div>
-        </>
+        </MainContainer>
     )
 }
 
