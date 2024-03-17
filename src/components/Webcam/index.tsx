@@ -136,18 +136,22 @@ const WebcamComponent: FC = () => {
                                         fontSize="small"
                                     />
                                 </IconButton>
-                                <IconButton>
-                                    <SaveIcon
-                                        href={imgSrc}
-                                        sx={{
-                                            color: 'white',
-                                            fontSize: '1rem',
-                                            padding: '0rem',
-                                            border: 'none',
-                                        }}
-                                        fontSize="small"
-                                    />
-                                </IconButton>
+                                <a
+                                    href={imgSrc}
+                                    download={`webcam_image_${index}.png`}
+                                >
+                                    <IconButton>
+                                        <SaveIcon
+                                            sx={{
+                                                color: 'white',
+                                                fontSize: '1rem',
+                                                padding: '0rem',
+                                                border: 'none',
+                                            }}
+                                            fontSize="small"
+                                        />
+                                    </IconButton>
+                                </a>
                             </div>
                         </div>
                     </div>
