@@ -1,9 +1,12 @@
 'use client'
-import React, { FC, useCallback, useRef, useState } from 'react'
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
 import Webcam from 'react-webcam'
 import ButtonComponent from '../Button'
 import CameraswitchIcon from '@mui/icons-material/Cameraswitch'
 import CameraIcon from '@mui/icons-material/Camera'
+import Draggable from 'react-draggable'
+import { Resizable } from 'react-resizable'
+import { Typography } from '@mui/material'
 
 const WebcamComponent: FC = () => {
     const FACING_MODE_USER = 'user'
@@ -18,6 +21,7 @@ const WebcamComponent: FC = () => {
     const webcamRef = useRef<Webcam>(null) // specify the type here
     const [facingMode, setFacingMode] = React.useState(FACING_MODE_USER)
     const [imgSrc, setImgSrc] = useState<string | null>(null) // specify the type here
+    const [date, setDate] = useState(new Date()) // Estado para la fecha
 
     const retake = () => {
         setImgSrc(null)
@@ -33,6 +37,13 @@ const WebcamComponent: FC = () => {
         const imageSrc = webcamRef.current?.getScreenshot() as string
         setImgSrc(imageSrc)
     }, [webcamRef])
+
+    useEffect(() => {
+        const timer = setInterval(() => setDate(new Date()), 1000) // Actualiza la fecha cada segundo
+        return () => {
+            clearInterval(timer) // Limpia el intervalo al desmontar el componente
+        }
+    }, [])
 
     return (
         <>
@@ -67,7 +78,25 @@ const WebcamComponent: FC = () => {
                                 borderBottomRightRadius: '0.5rem',
                             }}
                         />
-
+                        <Draggable>
+                            <Resizable width={200} height={200}>
+                                <div
+                                    style={{
+                                        position: 'absolute',
+                                        bottom: '10px',
+                                        right: '10px',
+                                        color: 'white',
+                                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                                        padding: '2px 5px',
+                                        borderRadius: '5px',
+                                    }}
+                                >
+                                    <Typography>
+                                        {date.toLocaleString()}{' '}
+                                    </Typography>
+                                </div>
+                            </Resizable>
+                        </Draggable>
                         <div
                             style={{
                                 display: 'flex',
