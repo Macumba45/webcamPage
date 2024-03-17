@@ -14,8 +14,9 @@ const roboto = Roboto({
 })
 
 export const metadata: Metadata = {
-    title: 'Hotel Data Booking',
-    description: 'Hotel Data Booking',
+    title: 'Captura de Foto de DNI y Marca de Agua',
+    description:
+        'Captura fotos de tu DNI y usa una marca de agua para prevenir fraudes',
 }
 
 export default function RootLayout({
