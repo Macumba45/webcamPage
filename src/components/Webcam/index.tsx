@@ -33,25 +33,14 @@ const WebcamComponent: FC = () => {
     const [imgSrcs, setImgSrcs] = useState<string[]>([]) // Cambiado a un array
     const [date, setDate] = useState(new Date())
     const [mirror, setMirror] = useState(false)
-    const [city, setCity] = useState<string | null>(null)
-    const [x, setX] = useState(0)
-    const [y, setY] = useState(0)
+    const [x, setX] = useState(150)
+    const [y, setY] = useState(100)
     console.log(x, y)
 
     const handleStop = (event: any, dragElement: any) => {
         setX(dragElement.x)
         setY(dragElement.y)
     }
-
-    useEffect(() => {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            fetch(
-                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.coords.latitude}&lon=${position.coords.longitude}`
-            )
-                .then(response => response.json())
-                .then(data => setCity(data.address.city))
-        })
-    }, [])
 
     const handleClick = React.useCallback(() => {
         setFacingMode(prevState =>
@@ -84,7 +73,7 @@ const WebcamComponent: FC = () => {
                 const text = date.toLocaleString()
                 ctx.fillText(text, x, y) // Añade la fecha
                 console.log(x, y)
-                ctx.drawImage(logo, 10, 10, 100, 100) // Dibuja el logo en la esquina superior izquierda
+                ctx.drawImage(logo, canvas.width - 100, 0, 100, 100) // Dibuja el logo en la esquina superior derecha
             }
             const watermarkedImage = canvas.toDataURL('image/png')
             setImgSrcs(prevSrcs => [...prevSrcs, watermarkedImage])
@@ -208,7 +197,7 @@ const WebcamComponent: FC = () => {
                     style={{
                         position: 'absolute',
                         top: '10px',
-                        left: '10px',
+                        right: '10px',
                         width: '70px',
                         height: '70px',
                     }}
@@ -219,19 +208,14 @@ const WebcamComponent: FC = () => {
                     <div
                         style={{
                             position: 'absolute',
-                            top: '10px',
-                            right: '10px',
+                            top: '0px',
+                            left: '0px',
                             color: 'white',
-                            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                            padding: '2px 5px',
                             borderRadius: '5px',
                         }}
                     >
                         <Typography fontSize={24} fontWeight={700}>
                             {date.toLocaleString()}
-                        </Typography>
-                        <Typography fontSize={24} fontWeight={700}>
-                            {city}
                         </Typography>
                     </div>
                 </Draggable>
