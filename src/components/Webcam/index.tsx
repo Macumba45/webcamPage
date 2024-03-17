@@ -14,6 +14,7 @@ import { IconButton, Typography } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { ContainerPicture, MainContainer, PicuresScreenShot } from './styles'
 import SaveIcon from '@mui/icons-material/Save'
+import trustedPng from '/public/trusted.png'
 
 const WebcamComponent: FC = () => {
     const FACING_MODE_USER = 'user'
@@ -32,7 +33,6 @@ const WebcamComponent: FC = () => {
     const [imgSrcs, setImgSrcs] = useState<string[]>([]) // Cambiado a un array
     const [date, setDate] = useState(new Date())
     const [mirror, setMirror] = useState(true)
-
     const [city, setCity] = useState<string | null>(null)
 
     useEffect(() => {
@@ -57,18 +57,26 @@ const WebcamComponent: FC = () => {
         const imageSrc = webcamRef.current?.getScreenshot() as string
         const canvas = document.createElement('canvas')
         const img = new Image()
-        img.onload = () => {
+        const logo = new Image() // Crea una nueva imagen para el logo
+        logo.src = trustedPng.src
+
+        const drawImages = () => {
+            if (!img.complete || !logo.complete) return
             canvas.width = img.width
             canvas.height = img.height
             const ctx = canvas.getContext('2d')
             if (ctx) {
                 ctx.drawImage(img, 0, 0)
-                ctx.fillText(date.toLocaleString(), 10, 80) // Añade la fecha
-                ctx.fillText(city || '', 10, 110) // Añade la ciudad
+                ctx.fillText(date.toLocaleString(), 150, 80) // Añade la fecha
+                // ctx.fillText(city || '', 200, 110) // Añade la ciudad
+                ctx.drawImage(logo, 10, 10, 100, 100) // Dibuja el logo en la esquina superior izquierda
             }
             const watermarkedImage = canvas.toDataURL('image/png')
             setImgSrcs(prevSrcs => [...prevSrcs, watermarkedImage])
         }
+
+        img.onload = drawImages
+        logo.onload = drawImages
         img.src = imageSrc
     }, [webcamRef])
 
