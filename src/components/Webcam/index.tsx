@@ -34,6 +34,14 @@ const WebcamComponent: FC = () => {
     const [date, setDate] = useState(new Date())
     const [mirror, setMirror] = useState(false)
     const [city, setCity] = useState<string | null>(null)
+    const [x, setX] = useState(0)
+    const [y, setY] = useState(0)
+    console.log(x, y)
+
+    const handleStop = (event: any, dragElement: any) => {
+        setX(dragElement.x)
+        setY(dragElement.y)
+    }
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -74,10 +82,8 @@ const WebcamComponent: FC = () => {
 
                 // Calcula las coordenadas para centrar la fecha
                 const text = date.toLocaleString()
-                const textWidth = ctx.measureText(text).width
-                const x = (canvas.width - textWidth) / 2
-                const y = (canvas.height - 20) / 2 // 20 es aproximadamente la altura de la fuente
                 ctx.fillText(text, x, y) // Añade la fecha
+                console.log(x, y)
                 ctx.drawImage(logo, 10, 10, 100, 100) // Dibuja el logo en la esquina superior izquierda
             }
             const watermarkedImage = canvas.toDataURL('image/png')
@@ -87,7 +93,7 @@ const WebcamComponent: FC = () => {
         img.onload = drawImages
         logo.onload = drawImages
         img.src = imageSrc
-    }, [webcamRef])
+    }, [webcamRef, date, x, y])
 
     const mirrorImage = () => {
         setMirror(!mirror)
@@ -203,13 +209,13 @@ const WebcamComponent: FC = () => {
                         position: 'absolute',
                         top: '10px',
                         left: '10px',
-                        width: '100px',
-                        height: '100px',
+                        width: '70px',
+                        height: '70px',
                     }}
                     src={trustedPng.src}
                     alt="Trusted"
                 />
-                <Draggable scale={1}>
+                <Draggable onStop={handleStop}>
                     <div
                         style={{
                             position: 'absolute',
@@ -286,7 +292,14 @@ const WebcamComponent: FC = () => {
                         onClose={() => setModalOpen(false)}
                     >
                         <DialogContent>
-                            <img src={modalImage} alt="Modal" />
+                            <img
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                }}
+                                src={modalImage}
+                                alt="Modal"
+                            />
                         </DialogContent>
 
                         <ButtonComponent
