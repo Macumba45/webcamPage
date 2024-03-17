@@ -7,7 +7,7 @@ import CameraswitchIcon from '@mui/icons-material/Cameraswitch'
 import CameraIcon from '@mui/icons-material/Camera'
 import SwitchCameraIcon from '@mui/icons-material/SwitchCamera'
 import Draggable from 'react-draggable'
-import { Resizable, ResizableBox } from 'react-resizable'
+import { Resizable } from 'react-resizable'
 import { Typography } from '@mui/material'
 
 const WebcamComponent: FC = () => {
@@ -89,28 +89,27 @@ const WebcamComponent: FC = () => {
                             }}
                         />
                         <Draggable>
-                            <ResizableBox
-                                width={200}
-                                height={200}
-                                minConstraints={[100, 100]}
+                            <Resizable
+                                minConstraints={[1, 1]}
                                 maxConstraints={[Infinity, Infinity]}
+                                width={400}
+                                height={400}
                             >
                                 <div
                                     style={{
-                                        position: 'absolute',
-                                        bottom: '10px',
-                                        right: '10px',
+                                        margin: '10px', // Agrega un margen al elemento hijo
                                         color: 'white',
                                         backgroundColor: 'rgba(0, 0, 0, 0.5)',
                                         padding: '2px 5px',
                                         borderRadius: '5px',
+                                        width: 'fit-content',
                                     }}
                                 >
                                     <Typography>
                                         {date.toLocaleString()}{' '}
                                     </Typography>
                                 </div>
-                            </ResizableBox>
+                            </Resizable>
                         </Draggable>
                         <div
                             style={{
