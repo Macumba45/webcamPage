@@ -4,6 +4,7 @@ import Webcam from 'react-webcam'
 import ButtonComponent from '../Button'
 import CameraswitchIcon from '@mui/icons-material/Cameraswitch'
 import CameraIcon from '@mui/icons-material/Camera'
+import SwitchCameraIcon from '@mui/icons-material/SwitchCamera'
 import Draggable from 'react-draggable'
 import { Resizable } from 'react-resizable'
 import { Typography } from '@mui/material'
@@ -22,6 +23,7 @@ const WebcamComponent: FC = () => {
     const [facingMode, setFacingMode] = React.useState(FACING_MODE_USER)
     const [imgSrc, setImgSrc] = useState<string | null>(null) // specify the type here
     const [date, setDate] = useState(new Date()) // Estado para la fecha
+    const [mirror, setMirror] = useState(true) // Estado para el espejo
 
     const retake = () => {
         setImgSrc(null)
@@ -33,10 +35,15 @@ const WebcamComponent: FC = () => {
                 : FACING_MODE_USER
         )
     }, [])
+
     const capture = useCallback(() => {
         const imageSrc = webcamRef.current?.getScreenshot() as string
         setImgSrc(imageSrc)
     }, [webcamRef])
+
+    const mirrorImage = () => {
+        setMirror(!mirror)
+    }
 
     useEffect(() => {
         const timer = setInterval(() => setDate(new Date()), 1000) // Actualiza la fecha cada segundo
@@ -66,6 +73,8 @@ const WebcamComponent: FC = () => {
                         <Webcam
                             audio={false}
                             screenshotQuality={1}
+                            imageSmoothing={true}
+                            mirrored={mirror}
                             ref={webcamRef}
                             screenshotFormat="image/jpeg"
                             download={true}
@@ -117,20 +126,7 @@ const WebcamComponent: FC = () => {
                                 icon={
                                     <CameraswitchIcon
                                         sx={{
-                                            color: 'white',
-                                            width: '2rem',
-                                            height: '2rem',
-                                            borderColor: 'white',
-                                            borderRadius: '50%',
-                                            border: '1px solid white',
-                                            padding: '0.8rem',
-                                            '&:hover': {
-                                                backgroundColor: 'white',
-                                                color: 'black',
-                                                width: '2.1rem',
-                                                height: '2.1rem',
-                                            },
-                                            transition: 'all 0.3s ease-in-out',
+                                            backgroundColor: 'black',
                                         }}
                                     />
                                 }
@@ -142,35 +138,33 @@ const WebcamComponent: FC = () => {
                                     title="Retake photo"
                                 />
                             ) : (
-                                <ButtonComponent
-                                    variant="contained"
-                                    onClick={capture}
-                                    sx={{
-                                        backgroundColor: 'transparent',
-                                        color: 'black',
-                                    }}
-                                    icon={
-                                        <CameraIcon
-                                            sx={{
-                                                color: 'white',
-                                                width: '2rem',
-                                                height: '2rem',
-                                                borderColor: 'white',
-                                                borderRadius: '50%',
-                                                border: '1px solid white',
-                                                padding: '0.8rem',
-                                                '&:hover': {
+                                <>
+                                    <ButtonComponent
+                                        variant="contained"
+                                        onClick={capture}
+                                        sx={{
+                                            backgroundColor: 'transparent',
+                                            color: 'black',
+                                        }}
+                                        icon={
+                                            <CameraIcon
+                                                sx={{
                                                     backgroundColor: 'white',
                                                     color: 'black',
-                                                    width: '2.1rem',
-                                                    height: '2.1rem',
-                                                },
-                                                transition:
-                                                    'all 0.3s ease-in-out',
-                                            }}
-                                        />
-                                    }
-                                />
+                                                }}
+                                            />
+                                        }
+                                    />
+                                    <ButtonComponent
+                                        variant="contained"
+                                        onClick={mirrorImage}
+                                        sx={{
+                                            backgroundColor: 'transparent',
+                                            color: 'black',
+                                        }}
+                                        icon={<SwitchCameraIcon />}
+                                    />
+                                </>
                             )}
                         </div>
                     </div>

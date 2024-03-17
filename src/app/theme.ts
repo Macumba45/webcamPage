@@ -47,6 +47,26 @@ const theme = createTheme({
                 root: {},
             },
         },
+        MuiSvgIcon: {
+            styleOverrides: {
+                root: {
+                    color: 'white',
+                    width: '2rem',
+                    height: '2rem',
+                    borderColor: 'white',
+                    borderRadius: '50%',
+                    border: '1px solid white',
+                    padding: '0.8rem',
+                    transition: 'all 0.3s ease-in-out',
+                    '&:hover': {
+                        backgroundColor: 'white',
+                        color: 'black',
+                        width: '2.1rem',
+                        height: '2.1rem',
+                    },
+                },
+            },
+        },
     },
 })
 
