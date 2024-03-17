@@ -69,16 +69,15 @@ const WebcamComponent: FC = () => {
             if (ctx) {
                 ctx.drawImage(img, 0, 0)
                 ctx.font = '20px Arial' // Cambia el tamaño de la fuente a 30px
-                ctx.fillStyle = 'white' // Cambia el color de la fuente a blanco
+                ctx.fillStyle = 'black' // Cambia el color de la fuente a blanco
+                ctx.textAlign = 'center'
 
                 // Calcula las coordenadas para centrar la fecha
                 const text = date.toLocaleString()
                 const textWidth = ctx.measureText(text).width
                 const x = (canvas.width - textWidth) / 2
                 const y = (canvas.height - 20) / 2 // 20 es aproximadamente la altura de la fuente
-
                 ctx.fillText(text, x, y) // Añade la fecha
-
                 ctx.drawImage(logo, 10, 10, 100, 100) // Dibuja el logo en la esquina superior izquierda
             }
             const watermarkedImage = canvas.toDataURL('image/png')
@@ -274,23 +273,21 @@ const WebcamComponent: FC = () => {
                     <Dialog
                         open={modalOpen}
                         onClose={() => setModalOpen(false)}
-                        maxWidth="md"
-                        fullWidth
                     >
                         <DialogContent>
-                            <img
-                                src={modalImage}
-                                alt="Modal"
-                                style={{ width: '100%', height: 'auto' }}
-                            />
+                            <img src={modalImage} alt="Modal" />
                         </DialogContent>
-                        <DialogActions>
-                            <ButtonComponent
-                                onClick={() => setModalOpen(false)}
-                            >
-                                Cerrar
-                            </ButtonComponent>
-                        </DialogActions>
+
+                        <ButtonComponent
+                            onClick={() => {
+                                const link = document.createElement('a')
+                                link.href = modalImage
+                                link.download = 'imagen.png'
+                                link.click()
+                            }}
+                        >
+                            Guardar Imagen
+                        </ButtonComponent>
                     </Dialog>
                 )}
             </div>
