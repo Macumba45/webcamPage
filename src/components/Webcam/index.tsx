@@ -95,6 +95,7 @@ const WebcamComponent: FC = () => {
                 >
                     {imgSrcs.map((imgSrc, index) => (
                         <div
+                            key={index}
                             style={{
                                 position: 'relative',
                                 display: 'inline-block',
