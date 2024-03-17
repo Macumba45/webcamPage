@@ -26,6 +26,18 @@ const WebcamComponent: FC = () => {
     const [date, setDate] = useState(new Date())
     const [mirror, setMirror] = useState(true)
 
+    const [city, setCity] = useState<string | null>(null)
+
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            fetch(
+                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.coords.latitude}&lon=${position.coords.longitude}`
+            )
+                .then(response => response.json())
+                .then(data => setCity(data.address.city))
+        })
+    }, [])
+
     const retake = () => {
         setImgSrc(null)
     }
@@ -92,7 +104,7 @@ const WebcamComponent: FC = () => {
                             <div
                                 style={{
                                     position: 'absolute',
-                                    bottom: '10px',
+                                    top: '10px',
                                     right: '10px',
                                     color: 'white',
                                     backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -101,7 +113,10 @@ const WebcamComponent: FC = () => {
                                 }}
                             >
                                 <Typography fontSize={24} fontWeight={700}>
-                                    {date.toLocaleString()}{' '}
+                                    {date.toLocaleString()}
+                                </Typography>
+                                <Typography fontSize={24} fontWeight={700}>
+                                    {city}
                                 </Typography>
                             </div>
                         </Draggable>
