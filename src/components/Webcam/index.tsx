@@ -33,8 +33,8 @@ const WebcamComponent: FC = () => {
     const [imgSrcs, setImgSrcs] = useState<string[]>([]) // Cambiado a un array
     const [date, setDate] = useState(new Date())
     const [mirror, setMirror] = useState(false)
-    const [x, setX] = useState(150)
-    const [y, setY] = useState(100)
+    const [x, setX] = useState(100)
+    const [y, setY] = useState(30)
     console.log(x, y)
 
     const handleStop = (event: any, dragElement: any) => {
