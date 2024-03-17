@@ -88,7 +88,12 @@ const WebcamComponent: FC = () => {
                             }}
                         />
                         <Draggable>
-                            <Resizable width={200} height={200}>
+                            <Resizable
+                                minConstraints={[1, 1]}
+                                maxConstraints={[Infinity, Infinity]}
+                                width={400}
+                                height={400}
+                            >
                                 <div
                                     style={{
                                         position: 'absolute',
