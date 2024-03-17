@@ -32,7 +32,7 @@ const WebcamComponent: FC = () => {
     const [facingMode, setFacingMode] = React.useState(FACING_MODE_USER)
     const [imgSrcs, setImgSrcs] = useState<string[]>([]) // Cambiado a un array
     const [date, setDate] = useState(new Date())
-    const [mirror, setMirror] = useState(true)
+    const [mirror, setMirror] = useState(false)
     const [city, setCity] = useState<string | null>(null)
 
     useEffect(() => {
