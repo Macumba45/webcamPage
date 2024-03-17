@@ -1,4 +1,5 @@
 'use client'
+
 import React, { FC, useCallback, useEffect, useRef, useState } from 'react'
 import Webcam from 'react-webcam'
 import ButtonComponent from '../Button'
@@ -6,7 +7,7 @@ import CameraswitchIcon from '@mui/icons-material/Cameraswitch'
 import CameraIcon from '@mui/icons-material/Camera'
 import SwitchCameraIcon from '@mui/icons-material/SwitchCamera'
 import Draggable from 'react-draggable'
-import { Resizable } from 'react-resizable'
+import { Resizable, ResizableBox } from 'react-resizable'
 import { Typography } from '@mui/material'
 
 const WebcamComponent: FC = () => {
@@ -19,11 +20,11 @@ const WebcamComponent: FC = () => {
         // height: { min: 720 },
         aspectRatio: 4 / 3,
     }
-    const webcamRef = useRef<Webcam>(null) // specify the type here
+    const webcamRef = useRef<Webcam>(null)
     const [facingMode, setFacingMode] = React.useState(FACING_MODE_USER)
-    const [imgSrc, setImgSrc] = useState<string | null>(null) // specify the type here
-    const [date, setDate] = useState(new Date()) // Estado para la fecha
-    const [mirror, setMirror] = useState(true) // Estado para el espejo
+    const [imgSrc, setImgSrc] = useState<string | null>(null)
+    const [date, setDate] = useState(new Date())
+    const [mirror, setMirror] = useState(true)
 
     const retake = () => {
         setImgSrc(null)
@@ -88,11 +89,11 @@ const WebcamComponent: FC = () => {
                             }}
                         />
                         <Draggable>
-                            <Resizable
-                                minConstraints={[1, 1]}
+                            <ResizableBox
+                                width={200}
+                                height={200}
+                                minConstraints={[100, 100]}
                                 maxConstraints={[Infinity, Infinity]}
-                                width={400}
-                                height={400}
                             >
                                 <div
                                     style={{
@@ -109,7 +110,7 @@ const WebcamComponent: FC = () => {
                                         {date.toLocaleString()}{' '}
                                     </Typography>
                                 </div>
-                            </Resizable>
+                            </ResizableBox>
                         </Draggable>
                         <div
                             style={{
