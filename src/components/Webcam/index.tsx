@@ -6,10 +6,14 @@ import ButtonComponent from '../Button'
 import CameraswitchIcon from '@mui/icons-material/Cameraswitch'
 import CameraIcon from '@mui/icons-material/Camera'
 import SwitchCameraIcon from '@mui/icons-material/SwitchCamera'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
 import Draggable from 'react-draggable'
 import { IconButton, Typography } from '@mui/material'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { ContainerPicture, MainContainer, PicuresScreenShot } from './styles'
+import SaveIcon from '@mui/icons-material/Save'
 
 const WebcamComponent: FC = () => {
     const FACING_MODE_USER = 'user'
@@ -22,6 +26,8 @@ const WebcamComponent: FC = () => {
         aspectRatio: 4 / 3,
     }
     const webcamRef = useRef<Webcam>(null)
+    const [modalOpen, setModalOpen] = useState(false)
+    const [modalImage, setModalImage] = useState('')
     const [facingMode, setFacingMode] = React.useState(FACING_MODE_USER)
     const [imgSrcs, setImgSrcs] = useState<string[]>([]) // Cambiado a un array
     const [date, setDate] = useState(new Date())
@@ -85,50 +91,65 @@ const WebcamComponent: FC = () => {
                         key={index}
                         style={{
                             position: 'relative',
-                            display: 'inline-block',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'center',
                             margin: '10px',
                         }}
                     >
-                        <a
-                            href={imgSrc}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            <PicuresScreenShot
-                                key={index}
-                                src={imgSrc}
-                                alt={`webcam ${index}`}
-                            />
-                        </a>
-                        <IconButton
-                            aria-label="delete"
-                            size="small"
+                        <div
                             style={{
-                                position: 'absolute',
-                                top: 0,
-                                right: 0,
-                                zIndex: 10000,
-                            }}
-                            onClick={() => {
-                                const newImgSrcs = [...imgSrcs]
-                                newImgSrcs.splice(index, 1)
-                                setImgSrcs(newImgSrcs)
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                margin: '10px',
                             }}
                         >
-                            <DeleteIcon
-                                sx={{
-                                    color: 'white',
-                                    fontSize: '1rem',
-                                    padding: '0rem',
-                                    border: 'none',
-                                    mt: 6,
-                                }}
-                                fontSize="small"
-                            />
-                        </IconButton>
-                        <a href={imgSrc} download={`webcam_image_${index}.png`}>
-                            <button>Guardar imagen</button>
-                        </a>
+                            <div>
+                                <PicuresScreenShot
+                                    key={index}
+                                    src={imgSrc}
+                                    alt={`webcam ${index}`}
+                                    onClick={() => {
+                                        setModalImage(imgSrc)
+                                        setModalOpen(true)
+                                    }}
+                                />
+                                <IconButton
+                                    aria-label="delete"
+                                    size="small"
+                                    onClick={() => {
+                                        const newImgSrcs = [...imgSrcs]
+                                        newImgSrcs.splice(index, 1)
+                                        setImgSrcs(newImgSrcs)
+                                    }}
+                                >
+                                    <DeleteIcon
+                                        sx={{
+                                            color: 'white',
+                                            fontSize: '1rem',
+                                            padding: '0rem',
+                                            border: 'none',
+                                        }}
+                                        fontSize="small"
+                                    />
+                                </IconButton>
+                                <IconButton>
+                                    <SaveIcon
+                                        href={imgSrc}
+                                        sx={{
+                                            color: 'white',
+                                            fontSize: '1rem',
+                                            padding: '0rem',
+                                            border: 'none',
+                                        }}
+                                        fontSize="small"
+                                    />
+                                </IconButton>
+                            </div>
+                        </div>
                     </div>
                 ))}
             </ContainerPicture>
@@ -145,7 +166,7 @@ const WebcamComponent: FC = () => {
                     imageSmoothing={true}
                     mirrored={mirror}
                     ref={webcamRef}
-                    screenshotFormat="image/jpeg"
+                    screenshotFormat="image/png"
                     download={true}
                     videoConstraints={{
                         ...videoConstraints,
@@ -227,6 +248,29 @@ const WebcamComponent: FC = () => {
                         icon={<SwitchCameraIcon />}
                     />
                 </div>
+                {modalOpen && (
+                    <Dialog
+                        open={modalOpen}
+                        onClose={() => setModalOpen(false)}
+                        maxWidth="md"
+                        fullWidth
+                    >
+                        <DialogContent>
+                            <img
+                                src={modalImage}
+                                alt="Modal"
+                                style={{ width: '100%', height: 'auto' }}
+                            />
+                        </DialogContent>
+                        <DialogActions>
+                            <ButtonComponent
+                                onClick={() => setModalOpen(false)}
+                            >
+                                Cerrar
+                            </ButtonComponent>
+                        </DialogActions>
+                    </Dialog>
+                )}
             </div>
         </MainContainer>
     )
