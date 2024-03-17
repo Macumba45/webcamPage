@@ -28,8 +28,26 @@ const ButtonComponent: FC<ButtonProps> = ({
                 disabled={disabled}
                 onClick={onClick}
                 variant={variant}
-                sx={sx}
-                startIcon={icon}
+                sx={{
+                    ...sx,
+                    '.MuiButton-startIcon': {
+                        margin: '0px', // adjust this value as needed
+                    },
+                    '&:hover': {
+                        backgroundColor: 'transparent', // remove the hover effect
+                    },
+                }}
+                startIcon={
+                    <div
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}
+                    >
+                        {icon}
+                    </div>
+                }
             >
                 {children || title}
             </Button>

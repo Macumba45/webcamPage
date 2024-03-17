@@ -3,6 +3,7 @@ import React, { FC, useCallback, useRef, useState } from 'react'
 import Webcam from 'react-webcam'
 import ButtonComponent from '../Button'
 import CameraswitchIcon from '@mui/icons-material/Cameraswitch'
+import CameraIcon from '@mui/icons-material/Camera'
 
 const WebcamComponent: FC = () => {
     const FACING_MODE_USER = 'user'
@@ -61,13 +62,17 @@ const WebcamComponent: FC = () => {
                                 ...videoConstraints,
                                 facingMode,
                             }}
+                            style={{
+                                borderBottomLeftRadius: '0.5rem',
+                                borderBottomRightRadius: '0.5rem',
+                            }}
                         />
 
                         <div
                             style={{
                                 display: 'flex',
                                 marginTop: '2rem',
-                                height: '100%',
+                                height: '100px',
                                 justifyContent: 'center',
                                 alignItems: 'center',
                             }}
@@ -75,12 +80,31 @@ const WebcamComponent: FC = () => {
                             <ButtonComponent
                                 variant="contained"
                                 onClick={handleClick}
-                                title="Switch camera"
+                                title=""
                                 sx={{
-                                    backgroundColor: 'white',
+                                    backgroundColor: 'transparent',
                                     color: 'black',
                                 }}
-                                icon={<CameraswitchIcon />}
+                                icon={
+                                    <CameraswitchIcon
+                                        sx={{
+                                            color: 'white',
+                                            width: '2rem',
+                                            height: '2rem',
+                                            borderColor: 'white',
+                                            borderRadius: '50%',
+                                            border: '1px solid white',
+                                            padding: '0.8rem',
+                                            '&:hover': {
+                                                backgroundColor: 'white',
+                                                color: 'black',
+                                                width: '2.1rem',
+                                                height: '2.1rem',
+                                            },
+                                            transition: 'all 0.3s ease-in-out',
+                                        }}
+                                    />
+                                }
                             />
                             {imgSrc ? (
                                 <ButtonComponent
@@ -92,7 +116,31 @@ const WebcamComponent: FC = () => {
                                 <ButtonComponent
                                     variant="contained"
                                     onClick={capture}
-                                    title="Capture photo"
+                                    sx={{
+                                        backgroundColor: 'transparent',
+                                        color: 'black',
+                                    }}
+                                    icon={
+                                        <CameraIcon
+                                            sx={{
+                                                color: 'white',
+                                                width: '2rem',
+                                                height: '2rem',
+                                                borderColor: 'white',
+                                                borderRadius: '50%',
+                                                border: '1px solid white',
+                                                padding: '0.8rem',
+                                                '&:hover': {
+                                                    backgroundColor: 'white',
+                                                    color: 'black',
+                                                    width: '2.1rem',
+                                                    height: '2.1rem',
+                                                },
+                                                transition:
+                                                    'all 0.3s ease-in-out',
+                                            }}
+                                        />
+                                    }
                                 />
                             )}
                         </div>
