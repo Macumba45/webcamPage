@@ -198,6 +198,17 @@ const WebcamComponent: FC = () => {
                         borderBottomRightRadius: '0.5rem',
                     }}
                 />
+                <img
+                    style={{
+                        position: 'absolute',
+                        top: '10px',
+                        left: '10px',
+                        width: '100px',
+                        height: '100px',
+                    }}
+                    src={trustedPng.src}
+                    alt="Trusted"
+                />
                 <Draggable scale={1}>
                     <div
                         style={{
