@@ -65,10 +65,20 @@ const WebcamComponent: FC = () => {
             canvas.width = img.width
             canvas.height = img.height
             const ctx = canvas.getContext('2d')
+
             if (ctx) {
                 ctx.drawImage(img, 0, 0)
-                ctx.fillText(date.toLocaleString(), 150, 80) // Añade la fecha
-                // ctx.fillText(city || '', 200, 110) // Añade la ciudad
+                ctx.font = '20px Arial' // Cambia el tamaño de la fuente a 30px
+                ctx.fillStyle = 'white' // Cambia el color de la fuente a blanco
+
+                // Calcula las coordenadas para centrar la fecha
+                const text = date.toLocaleString()
+                const textWidth = ctx.measureText(text).width
+                const x = (canvas.width - textWidth) / 2
+                const y = (canvas.height - 20) / 2 // 20 es aproximadamente la altura de la fuente
+
+                ctx.fillText(text, x, y) // Añade la fecha
+
                 ctx.drawImage(logo, 10, 10, 100, 100) // Dibuja el logo en la esquina superior izquierda
             }
             const watermarkedImage = canvas.toDataURL('image/png')
