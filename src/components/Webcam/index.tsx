@@ -90,7 +90,8 @@ const WebcamComponent: FC = () => {
                         position: 'absolute',
                         zIndex: 9999,
                         display: 'flex',
-                        margin: '10px',
+                        flexWrap: 'wrap',
+                        margin: '5px',
                     }}
                 >
                     {imgSrcs.map((imgSrc, index) => (
@@ -107,8 +108,8 @@ const WebcamComponent: FC = () => {
                                     display: 'flex',
                                     flexWrap: 'wrap',
                                     justifyContent: 'center',
-                                    width: '120px',
-                                    height: '120px',
+                                    width: '110px',
+                                    height: '110px',
                                     border: '2px solid white',
                                     borderRadius: '0.5rem',
                                     margin: '5px',
