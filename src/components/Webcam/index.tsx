@@ -88,28 +88,22 @@ const WebcamComponent: FC = () => {
                                 borderBottomRightRadius: '0.5rem',
                             }}
                         />
-                        <Draggable>
-                            <Resizable
-                                minConstraints={[1, 1]}
-                                maxConstraints={[Infinity, Infinity]}
-                                width={400}
-                                height={400}
+                        <Draggable scale={1}>
+                            <div
+                                style={{
+                                    position: 'absolute',
+                                    bottom: '10px',
+                                    right: '10px',
+                                    color: 'white',
+                                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                                    padding: '2px 5px',
+                                    borderRadius: '5px',
+                                }}
                             >
-                                <div
-                                    style={{
-                                        margin: '10px', // Agrega un margen al elemento hijo
-                                        color: 'white',
-                                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                                        padding: '2px 5px',
-                                        borderRadius: '5px',
-                                        width: 'fit-content',
-                                    }}
-                                >
-                                    <Typography>
-                                        {date.toLocaleString()}{' '}
-                                    </Typography>
-                                </div>
-                            </Resizable>
+                                <Typography fontSize={24} fontWeight={700}>
+                                    {date.toLocaleString()}{' '}
+                                </Typography>
+                            </div>
                         </Draggable>
                         <div
                             style={{
