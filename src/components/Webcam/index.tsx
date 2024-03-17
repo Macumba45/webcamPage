@@ -8,7 +8,8 @@ import CameraIcon from '@mui/icons-material/Camera'
 import SwitchCameraIcon from '@mui/icons-material/SwitchCamera'
 import Draggable from 'react-draggable'
 import { Resizable } from 'react-resizable'
-import { Typography } from '@mui/material'
+import { IconButton, Typography } from '@mui/material'
+import DeleteIcon from '@mui/icons-material/Delete'
 
 const WebcamComponent: FC = () => {
     const FACING_MODE_USER = 'user'
@@ -22,7 +23,7 @@ const WebcamComponent: FC = () => {
     }
     const webcamRef = useRef<Webcam>(null)
     const [facingMode, setFacingMode] = React.useState(FACING_MODE_USER)
-    const [imgSrc, setImgSrc] = useState<string | null>(null)
+    const [imgSrcs, setImgSrcs] = useState<string[]>([]) // Cambiado a un array
     const [date, setDate] = useState(new Date())
     const [mirror, setMirror] = useState(true)
 
@@ -38,9 +39,6 @@ const WebcamComponent: FC = () => {
         })
     }, [])
 
-    const retake = () => {
-        setImgSrc(null)
-    }
     const handleClick = React.useCallback(() => {
         setFacingMode(prevState =>
             prevState === FACING_MODE_USER
@@ -51,7 +49,21 @@ const WebcamComponent: FC = () => {
 
     const capture = useCallback(() => {
         const imageSrc = webcamRef.current?.getScreenshot() as string
-        setImgSrc(imageSrc)
+        const canvas = document.createElement('canvas')
+        const img = new Image()
+        img.onload = () => {
+            canvas.width = img.width
+            canvas.height = img.height
+            const ctx = canvas.getContext('2d')
+            if (ctx) {
+                ctx.drawImage(img, 0, 0)
+                ctx.fillText(date.toLocaleString(), 10, 80) // Añade la fecha
+                ctx.fillText(city || '', 10, 110) // Añade la ciudad
+            }
+            const watermarkedImage = canvas.toDataURL('image/png')
+            setImgSrcs(prevSrcs => [...prevSrcs, watermarkedImage])
+        }
+        img.src = imageSrc
     }, [webcamRef])
 
     const mirrorImage = () => {
@@ -73,116 +85,162 @@ const WebcamComponent: FC = () => {
                     background: 'black',
                 }}
             >
-                {imgSrc ? (
-                    <img src={imgSrc} alt="webcam" />
-                ) : (
+                <div
+                    style={{
+                        position: 'absolute',
+                        zIndex: 9999,
+                        display: 'flex',
+                        margin: '10px',
+                    }}
+                >
+                    {imgSrcs.map((imgSrc, index) => (
+                        <div
+                            style={{
+                                position: 'relative',
+                                display: 'inline-block',
+                                margin: '10px',
+                            }}
+                        >
+                            <img
+                                style={{
+                                    display: 'flex',
+                                    flexWrap: 'wrap',
+                                    justifyContent: 'center',
+                                    width: '120px',
+                                    height: '120px',
+                                    border: '2px solid white',
+                                    borderRadius: '0.5rem',
+                                    margin: '5px',
+                                }}
+                                key={index}
+                                src={imgSrc}
+                                alt={`webcam ${index}`}
+                            />
+                            <IconButton
+                                aria-label="delete"
+                                size="small"
+                                style={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    right: 0,
+                                    zIndex: 10000,
+                                }}
+                                onClick={() => {
+                                    const newImgSrcs = [...imgSrcs]
+                                    newImgSrcs.splice(index, 1)
+                                    setImgSrcs(newImgSrcs)
+                                }}
+                            >
+                                <DeleteIcon
+                                    sx={{
+                                        color: 'white',
+                                        fontSize: '1rem',
+                                        padding: '0rem',
+                                        border: 'none',
+                                        mt: 8,
+                                    }}
+                                    fontSize="small"
+                                />
+                            </IconButton>
+                        </div>
+                    ))}
+                </div>
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        height: '100%',
+                    }}
+                >
+                    <Webcam
+                        audio={false}
+                        screenshotQuality={1}
+                        imageSmoothing={true}
+                        mirrored={mirror}
+                        ref={webcamRef}
+                        screenshotFormat="image/jpeg"
+                        download={true}
+                        videoConstraints={{
+                            ...videoConstraints,
+                            facingMode,
+                        }}
+                        style={{
+                            borderBottomLeftRadius: '0.5rem',
+                            borderBottomRightRadius: '0.5rem',
+                        }}
+                    />
+                    <Draggable scale={1}>
+                        <div
+                            style={{
+                                position: 'absolute',
+                                top: '10px',
+                                right: '10px',
+                                color: 'white',
+                                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                                padding: '2px 5px',
+                                borderRadius: '5px',
+                            }}
+                        >
+                            <Typography fontSize={24} fontWeight={700}>
+                                {date.toLocaleString()}
+                            </Typography>
+                            <Typography fontSize={24} fontWeight={700}>
+                                {city}
+                            </Typography>
+                        </div>
+                    </Draggable>
                     <div
                         style={{
                             display: 'flex',
-                            flexDirection: 'column',
-                            height: '100%',
+                            marginTop: '2rem',
+                            height: '100px',
+                            justifyContent: 'center',
+                            alignItems: 'center',
                         }}
                     >
-                        <Webcam
-                            audio={false}
-                            screenshotQuality={1}
-                            imageSmoothing={true}
-                            mirrored={mirror}
-                            ref={webcamRef}
-                            screenshotFormat="image/jpeg"
-                            download={true}
-                            videoConstraints={{
-                                ...videoConstraints,
-                                facingMode,
+                        <ButtonComponent
+                            variant="contained"
+                            onClick={handleClick}
+                            title=""
+                            sx={{
+                                backgroundColor: 'transparent',
+                                color: 'black',
                             }}
-                            style={{
-                                borderBottomLeftRadius: '0.5rem',
-                                borderBottomRightRadius: '0.5rem',
-                            }}
-                        />
-                        <Draggable scale={1}>
-                            <div
-                                style={{
-                                    position: 'absolute',
-                                    top: '10px',
-                                    right: '10px',
-                                    color: 'white',
-                                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                                    padding: '2px 5px',
-                                    borderRadius: '5px',
-                                }}
-                            >
-                                <Typography fontSize={24} fontWeight={700}>
-                                    {date.toLocaleString()}
-                                </Typography>
-                                <Typography fontSize={24} fontWeight={700}>
-                                    {city}
-                                </Typography>
-                            </div>
-                        </Draggable>
-                        <div
-                            style={{
-                                display: 'flex',
-                                marginTop: '2rem',
-                                height: '100px',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <ButtonComponent
-                                variant="contained"
-                                onClick={handleClick}
-                                title=""
-                                sx={{
-                                    backgroundColor: 'transparent',
-                                    color: 'black',
-                                }}
-                                icon={
-                                    <CameraswitchIcon
-                                        sx={{
-                                            backgroundColor: 'black',
-                                        }}
-                                    />
-                                }
-                            />
-                            {imgSrc ? (
-                                <ButtonComponent
-                                    variant="contained"
-                                    onClick={retake}
-                                    title="Retake photo"
+                            icon={
+                                <CameraswitchIcon
+                                    sx={{
+                                        backgroundColor: 'black',
+                                    }}
                                 />
-                            ) : (
-                                <>
-                                    <ButtonComponent
-                                        variant="contained"
-                                        onClick={capture}
-                                        sx={{
-                                            backgroundColor: 'transparent',
-                                            color: 'black',
-                                        }}
-                                        icon={
-                                            <CameraIcon
-                                                sx={{
-                                                    backgroundColor: 'white',
-                                                    color: 'black',
-                                                }}
-                                            />
-                                        }
-                                    />
-                                    <ButtonComponent
-                                        variant="contained"
-                                        onClick={mirrorImage}
-                                        sx={{
-                                            backgroundColor: 'transparent',
-                                            color: 'black',
-                                        }}
-                                        icon={<SwitchCameraIcon />}
-                                    />
-                                </>
-                            )}
-                        </div>
+                            }
+                        />
+                        <ButtonComponent
+                            variant="contained"
+                            onClick={capture}
+                            sx={{
+                                backgroundColor: 'transparent',
+                                color: 'black',
+                            }}
+                            icon={
+                                <CameraIcon
+                                    sx={{
+                                        backgroundColor: 'white',
+                                        color: 'black',
+                                    }}
+                                />
+                            }
+                        />
+                        <ButtonComponent
+                            variant="contained"
+                            onClick={mirrorImage}
+                            sx={{
+                                backgroundColor: 'transparent',
+                                color: 'black',
+                            }}
+                            icon={<SwitchCameraIcon />}
+                        />
                     </div>
-                )}
+                </div>
             </div>
         </>
     )
