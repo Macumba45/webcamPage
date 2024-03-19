@@ -15,6 +15,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import { ContainerPicture, MainContainer, PicuresScreenShot } from './styles'
 import SaveIcon from '@mui/icons-material/Save'
 import trustedPng from '/public/trusted.png'
+import callWaterMarkAPI from '@/services/waterMark'
 
 const WebcamComponent: FC = () => {
     const FACING_MODE_USER = 'user'
@@ -35,7 +36,6 @@ const WebcamComponent: FC = () => {
     const [mirror, setMirror] = useState(false)
     const [x, setX] = useState(100)
     const [y, setY] = useState(30)
-    console.log(x, y)
 
     const handleStop = (event: any, dragElement: any) => {
         setX(dragElement.x)
@@ -50,38 +50,24 @@ const WebcamComponent: FC = () => {
         )
     }, [])
 
-    const capture = useCallback(() => {
+    const capture = useCallback(async () => {
         const imageSrc = webcamRef.current?.getScreenshot() as string
-        const canvas = document.createElement('canvas')
         const img = new Image()
-        const logo = new Image() // Crea una nueva imagen para el logo
-        logo.src = trustedPng.src
-
-        const drawImages = () => {
-            if (!img.complete || !logo.complete) return
-            canvas.width = img.width
-            canvas.height = img.height
-            const ctx = canvas.getContext('2d')
-
-            if (ctx) {
-                ctx.drawImage(img, 0, 0)
-                ctx.font = '20px Arial' // Cambia el tamaño de la fuente a 30px
-                ctx.fillStyle = 'black' // Cambia el color de la fuente a blanco
-                ctx.textAlign = 'center'
-
-                // Calcula las coordenadas para centrar la fecha
-                const text = date.toLocaleString()
-                ctx.fillText(text, x, y) // Añade la fecha
-                console.log(x, y)
-                ctx.drawImage(logo, canvas.width - 100, 0, 100, 100) // Dibuja el logo en la esquina superior derecha
-            }
-            const watermarkedImage = canvas.toDataURL('image/png')
-            setImgSrcs(prevSrcs => [...prevSrcs, watermarkedImage])
-        }
-
-        img.onload = drawImages
-        logo.onload = drawImages
         img.src = imageSrc
+
+        img.onload = async () => {
+            try {
+                const watermarkedImage = await callWaterMarkAPI(
+                    imageSrc,
+                    'Your watermark text',
+                    img.width,
+                    img.height
+                )
+                setImgSrcs(prevSrcs => [...prevSrcs, watermarkedImage])
+            } catch (error) {
+                console.error('Error processing image:', error)
+            }
+        }
     }, [webcamRef, date, x, y])
 
     const mirrorImage = () => {
@@ -119,16 +105,16 @@ const WebcamComponent: FC = () => {
                                 margin: '10px',
                             }}
                         >
+                            <PicuresScreenShot
+                                key={index}
+                                src={imgSrc}
+                                alt={`webcam ${index}`}
+                                onClick={() => {
+                                    setModalImage(imgSrc)
+                                    setModalOpen(true)
+                                }}
+                            />
                             <div>
-                                <PicuresScreenShot
-                                    key={index}
-                                    src={imgSrc}
-                                    alt={`webcam ${index}`}
-                                    onClick={() => {
-                                        setModalImage(imgSrc)
-                                        setModalOpen(true)
-                                    }}
-                                />
                                 <IconButton
                                     aria-label="delete"
                                     size="small"
@@ -193,7 +179,7 @@ const WebcamComponent: FC = () => {
                         borderBottomRightRadius: '0.5rem',
                     }}
                 />
-                <img
+                {/* <img
                     style={{
                         position: 'absolute',
                         top: '10px',
@@ -203,7 +189,7 @@ const WebcamComponent: FC = () => {
                     }}
                     src={trustedPng.src}
                     alt="Trusted"
-                />
+                /> */}
                 <Draggable onStop={handleStop}>
                     <div
                         style={{
@@ -214,9 +200,9 @@ const WebcamComponent: FC = () => {
                             borderRadius: '5px',
                         }}
                     >
-                        <Typography fontSize={24} fontWeight={700}>
+                        {/* <Typography fontSize={24} fontWeight={700}>
                             {date.toLocaleString()}
-                        </Typography>
+                        </Typography> */}
                     </div>
                 </Draggable>
                 <div
