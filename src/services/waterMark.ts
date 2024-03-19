@@ -5,7 +5,7 @@ const callWaterMarkAPI = async (
     height: any
 ) => {
     try {
-        const response = await fetch('/api/waterMark/waterMark', {
+        const response = await fetch('/api/waterMark', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
