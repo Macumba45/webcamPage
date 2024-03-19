@@ -16,6 +16,12 @@ const getWaterMarkImageByTxt = async (
 }
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+    // Asegurarse de que solo se acepten solicitudes POST
+    if (req.method !== 'POST') {
+        res.status(405).send('Method Not Allowed')
+        return
+    }
+
     try {
         const {
             picUrl,
