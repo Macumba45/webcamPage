@@ -190,21 +190,7 @@ const WebcamComponent: FC = () => {
                     src={trustedPng.src}
                     alt="Trusted"
                 /> */}
-                <Draggable onStop={handleStop}>
-                    <div
-                        style={{
-                            position: 'absolute',
-                            top: '0px',
-                            left: '0px',
-                            color: 'white',
-                            borderRadius: '5px',
-                        }}
-                    >
-                        {/* <Typography fontSize={24} fontWeight={700}>
-                            {date.toLocaleString()}
-                        </Typography> */}
-                    </div>
-                </Draggable>
+
                 <div
                     style={{
                         display: 'flex',
