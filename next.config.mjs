@@ -6,7 +6,6 @@ const nextConfig = {
         '@mui/material',
         '@mui/system',
         '@mui/icons-material', // If @mui/icons-material is being used
-        '@mui/x-data-grid',
     ],
     webpack: config => {
         config.resolve.alias = {
