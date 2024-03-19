@@ -15,6 +15,19 @@ const nextConfig = {
         }
         return config
     },
+    async headers() {
+        return [
+            {
+                source: '/api/waterMark/waterMark',
+                headers: [
+                    {
+                        key: 'Access-Control-Allow-Methods',
+                        value: 'POST',
+                    },
+                ],
+            },
+        ]
+    },
 }
 
 export default nextConfig
