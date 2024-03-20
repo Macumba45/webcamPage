@@ -190,8 +190,8 @@ const WebcamComponent: FC = () => {
                 >
                     <div
                         style={{
-                            width: '70%',
-                            height: '70%',
+                            width: '250px',
+                            height: '450px',
                             border: '1px solid white',
                             position: 'absolute',
                             borderRadius: '0.5rem',
