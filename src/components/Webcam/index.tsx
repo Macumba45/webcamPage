@@ -15,6 +15,8 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import { ContainerPicture, MainContainer, PicuresScreenShot } from './styles'
 import SaveIcon from '@mui/icons-material/Save'
 import trustedPng from '/public/trusted.png'
+import waterMark from '/public/waterMark.png'
+
 import callWaterMarkAPI from '@/services/waterMark'
 
 const WebcamComponent: FC = () => {
@@ -178,6 +180,16 @@ const WebcamComponent: FC = () => {
                         borderBottomLeftRadius: '0.5rem',
                         borderBottomRightRadius: '0.5rem',
                     }}
+                />
+
+                <img // Paso 2
+                    style={{
+                        position: 'absolute', // Paso 4
+                        objectFit: 'cover',
+                        width: '100%',
+                    }}
+                    src={waterMark.src} // Paso 1
+                    alt="Overlay"
                 />
                 {/* <img
                     style={{
