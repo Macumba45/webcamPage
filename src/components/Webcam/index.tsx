@@ -34,7 +34,7 @@ const WebcamComponent: FC = () => {
     const [modalImage, setModalImage] = useState('')
     const [facingMode, setFacingMode] = React.useState(FACING_MODE_USER)
     const [imgSrcs, setImgSrcs] = useState<string[]>([]) // Cambiado a un array
-    const [mirror, setMirror] = useState(false)
+    const [mirror, setMirror] = useState(true)
     const [isCapturing, setIsCapturing] = useState(false)
 
     const handleClick = React.useCallback(() => {
