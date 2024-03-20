@@ -35,6 +35,7 @@ const WebcamComponent: FC = () => {
     const [facingMode, setFacingMode] = React.useState(FACING_MODE_USER)
     const [imgSrcs, setImgSrcs] = useState<string[]>([]) // Cambiado a un array
     const [mirror, setMirror] = useState(false)
+    const [isCapturing, setIsCapturing] = useState(false)
 
     const handleClick = React.useCallback(() => {
         setFacingMode(prevState =>
@@ -45,6 +46,7 @@ const WebcamComponent: FC = () => {
     }, [])
 
     const capture = useCallback(async () => {
+        setIsCapturing(true)
         const imageSrc = webcamRef.current?.getScreenshot() as string
         const img = new Image()
         img.src = imageSrc
@@ -60,6 +62,8 @@ const WebcamComponent: FC = () => {
                 setImgSrcs(prevSrcs => [...prevSrcs, watermarkedImage])
             } catch (error) {
                 console.error('Error processing image:', error)
+            } finally {
+                setIsCapturing(false)
             }
         }
     }, [webcamRef])
@@ -170,10 +174,9 @@ const WebcamComponent: FC = () => {
                 <img // Paso 2
                     style={{
                         position: 'absolute', // Paso 4
-                        objectFit: 'cover',
+                        objectFit: 'contain',
                         width: '100%',
                         height: '100%',
-                        opacity: 0.2,
                     }}
                     src={waterMark.src} // Paso 1
                     alt="Overlay"
@@ -206,6 +209,7 @@ const WebcamComponent: FC = () => {
                     <ButtonComponent
                         variant="contained"
                         onClick={capture}
+                        disabled={isCapturing}
                         sx={{
                             backgroundColor: 'transparent',
                             color: 'black',
