@@ -34,15 +34,7 @@ const WebcamComponent: FC = () => {
     const [modalImage, setModalImage] = useState('')
     const [facingMode, setFacingMode] = React.useState(FACING_MODE_USER)
     const [imgSrcs, setImgSrcs] = useState<string[]>([]) // Cambiado a un array
-    const [date, setDate] = useState(new Date())
     const [mirror, setMirror] = useState(false)
-    const [x, setX] = useState(100)
-    const [y, setY] = useState(30)
-
-    const handleStop = (event: any, dragElement: any) => {
-        setX(dragElement.x)
-        setY(dragElement.y)
-    }
 
     const handleClick = React.useCallback(() => {
         setFacingMode(prevState =>
@@ -70,18 +62,11 @@ const WebcamComponent: FC = () => {
                 console.error('Error processing image:', error)
             }
         }
-    }, [webcamRef, date, x, y])
+    }, [webcamRef])
 
     const mirrorImage = () => {
         setMirror(!mirror)
     }
-
-    useEffect(() => {
-        const timer = setInterval(() => setDate(new Date()), 1000) // Actualiza la fecha cada segundo
-        return () => {
-            clearInterval(timer) // Limpia el intervalo al desmontar el componente
-        }
-    }, [])
 
     return (
         <MainContainer>
@@ -188,22 +173,11 @@ const WebcamComponent: FC = () => {
                         objectFit: 'cover',
                         width: '100%',
                         height: '100%',
+                        opacity: 0.2,
                     }}
                     src={waterMark.src} // Paso 1
                     alt="Overlay"
                 />
-                {/* <img
-                    style={{
-                        position: 'absolute',
-                        top: '10px',
-                        right: '10px',
-                        width: '70px',
-                        height: '70px',
-                    }}
-                    src={trustedPng.src}
-                    alt="Trusted"
-                /> */}
-
                 <div
                     style={{
                         display: 'flex',
