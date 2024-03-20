@@ -187,6 +187,7 @@ const WebcamComponent: FC = () => {
                         position: 'absolute', // Paso 4
                         objectFit: 'cover',
                         width: '100%',
+                        height: '100%',
                     }}
                     src={waterMark.src} // Paso 1
                     alt="Overlay"
