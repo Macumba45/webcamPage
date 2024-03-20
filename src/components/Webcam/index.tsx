@@ -188,12 +188,13 @@ const WebcamComponent: FC = () => {
                         position: 'absolute',
                         width: '100%',
                         height: '100%',
+                        marginTop: '2rem',
                     }}
                 >
                     <div
                         style={{
                             width: '250px',
-                            height: '450px',
+                            height: '400px',
                             border: '1px solid white',
                             position: 'absolute',
                             borderRadius: '0.5rem',
