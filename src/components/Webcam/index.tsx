@@ -239,10 +239,11 @@ const WebcamComponent: FC = () => {
                                 sx={{
                                     backgroundColor: 'white',
                                     color: 'black',
-                                    transform: `${
-                                        isCapturing ? 'rotate(360deg)' : 'none'
+                                    animation: `${
+                                        isCapturing
+                                            ? 'spin 1s linear infinite'
+                                            : 'none'
                                     }`,
-                                    transition: 'transform 1s',
                                 }}
                             />
                         }

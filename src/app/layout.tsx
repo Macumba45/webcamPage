@@ -6,6 +6,7 @@ import { Roboto } from 'next/font/google'
 import { ThemeProvider } from '@mui/system'
 import theme from './theme'
 import './reset.css'
+import './global.css'
 
 const roboto = Roboto({
     weight: ['100', '300', '400', '500', '700', '900'],
