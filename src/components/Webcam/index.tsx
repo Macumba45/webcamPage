@@ -237,8 +237,10 @@ const WebcamComponent: FC = () => {
                         icon={
                             <CameraIcon
                                 sx={{
-                                    backgroundColor: 'white',
-                                    color: 'black',
+                                    backgroundColor: isCapturing
+                                        ? 'black'
+                                        : 'white',
+                                    color: isCapturing ? 'white' : 'black',
                                     animation: `${
                                         isCapturing
                                             ? 'spin 1s linear infinite'
