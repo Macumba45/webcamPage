@@ -171,7 +171,7 @@ const WebcamComponent: FC = () => {
                     }}
                 />
 
-                <img // Paso 2
+                {/* <img // Paso 2
                     style={{
                         position: 'absolute', // Paso 4
                         objectFit: 'contain',
@@ -180,7 +180,24 @@ const WebcamComponent: FC = () => {
                     }}
                     src={waterMark.src} // Paso 1
                     alt="Overlay"
-                />
+                /> */}
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                >
+                    <div
+                        style={{
+                            width: '70%',
+                            height: '70%',
+                            border: '1px solid white',
+                            position: 'absolute',
+                            borderRadius: '0.5rem',
+                        }}
+                    ></div>
+                </div>
                 <div
                     style={{
                         display: 'flex',
