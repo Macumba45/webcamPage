@@ -188,7 +188,7 @@ const WebcamComponent: FC = () => {
                         position: 'absolute',
                         width: '100%',
                         height: '100%',
-                        marginTop: '2rem',
+                        marginTop: '3rem',
                     }}
                 >
                     <div
@@ -239,6 +239,10 @@ const WebcamComponent: FC = () => {
                                 sx={{
                                     backgroundColor: 'white',
                                     color: 'black',
+                                    transform: `${
+                                        isCapturing ? 'rotate(360deg)' : 'none'
+                                    }`,
+                                    transition: 'transform 1s',
                                 }}
                             />
                         }
