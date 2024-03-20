@@ -187,7 +187,6 @@ const WebcamComponent: FC = () => {
                         justifyContent: 'center',
                         position: 'absolute',
                         width: '100%',
-                        height: '100%',
                         top: 60,
                     }}
                 >
@@ -206,7 +205,7 @@ const WebcamComponent: FC = () => {
                         display: 'flex',
                         marginTop: '2rem',
                         height: '100px',
-                        justifyContent: 'center',
+                        justifyContent: 'space-around   ',
                         alignItems: 'center',
                     }}
                 >

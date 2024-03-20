@@ -23,7 +23,7 @@ const ButtonComponent: FC<ButtonProps> = ({
     icon,
 }) => {
     return (
-        <Stack direction="row" spacing={2} marginLeft={3} marginRight={3}>
+        <Stack display="flex" direction="row" spacing={2}>
             <Button
                 disabled={disabled}
                 onClick={onClick}
