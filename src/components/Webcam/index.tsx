@@ -205,7 +205,7 @@ const WebcamComponent: FC = () => {
                         display: 'flex',
                         marginTop: '2rem',
                         height: '100px',
-                        justifyContent: 'space-around   ',
+                        justifyContent: 'space-around',
                         alignItems: 'center',
                     }}
                 >
@@ -239,7 +239,7 @@ const WebcamComponent: FC = () => {
                                     backgroundColor: isCapturing
                                         ? 'black'
                                         : 'white',
-                                    color: isCapturing ? 'white' : 'black',
+                                    color: isCapturing ? 'gray' : 'black',
                                     animation: `${
                                         isCapturing
                                             ? 'spin 1s linear infinite'

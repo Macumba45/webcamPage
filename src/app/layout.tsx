@@ -28,6 +28,10 @@ export default function RootLayout({
     return (
         <>
             <head></head>
+            <meta
+                http-equiv="ScreenOrientation"
+                content="autoRotate:disabled"
+            />
             <html lang="en" className={roboto.className}>
                 <body
                     style={{
