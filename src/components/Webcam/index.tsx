@@ -157,7 +157,7 @@ const WebcamComponent: FC = () => {
                     audio={false}
                     screenshotQuality={1}
                     imageSmoothing={true}
-                    mirrored={mirror}
+                    mirrored={facingMode === 'user'} // Espejo solo cuando se utiliza la cámara frontal
                     ref={webcamRef}
                     screenshotFormat="image/png"
                     download={true}
